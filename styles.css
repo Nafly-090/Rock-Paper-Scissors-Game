@@ -57,17 +57,6 @@ body::before {
     }
 }
 
-
-/* Background fade-in effect */
-@keyframes fadeInBackground {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
 .game-container {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.1);
@@ -228,6 +217,8 @@ h1 {
 @media (max-width: 768px) {
     .game-container {
         padding: 30px;
+        width: 90%; /* Adjust width for mobile */
+        max-width: 400px; /* Reduce max-width on smaller screens */
     }
 
     h1 {
@@ -237,10 +228,30 @@ h1 {
     .choices button {
         padding: 20px;
         font-size: 20px;
+        width: 120px; /* Adjust button width for mobile */
+        height: 120px; /* Adjust button height for mobile */
     }
 
     .score {
         flex-direction: column;
         align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem; /* Make h1 smaller on very small screens */
+    }
+
+    .choices button {
+        padding: 15px;
+        font-size: 18px;
+        width: 100px; /* Further adjust button size */
+        height: 100px; /* Further adjust button size */
+    }
+
+    .score {
+        font-size: 1rem;
+        width: 80%; /* Ensure the score section takes full width */
     }
 }
