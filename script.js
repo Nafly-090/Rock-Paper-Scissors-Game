@@ -1,68 +1,81 @@
+// Select DOM elements
 const playerScoreDisplay = document.getElementById('playerScore');
 const computerScoreDisplay = document.getElementById('computerScore');
 const resultMessage = document.getElementById('resultMessage');
-const resetButton = document.getElementById('resetButton'); // Reset button reference
+const resetButton = document.getElementById('resetButton');
+const choicesButtons = document.querySelectorAll('.choice');
 
+// Game variables
 let playerScore = 0;
 let computerScore = 0;
+let isGameActive = true;
 
+// Choices map
 const choices = {
     rock: '<i class="fas fa-hand-rock"></i>',
     paper: '<i class="fas fa-hand-paper"></i>',
     scissors: '<i class="fas fa-hand-scissors"></i>',
 };
 
-function getComputerChoice() {
+// Get a random computer choice
+const getComputerChoice = () => {
     const choiceKeys = Object.keys(choices);
-    const randomIndex = Math.floor(Math.random() * choiceKeys.length);
-    return choiceKeys[randomIndex];
-}
+    return choiceKeys[Math.floor(Math.random() * choiceKeys.length)];
+};
 
-function determineWinner(playerChoice, computerChoice) {
-    if (playerChoice === computerChoice) {
-        return 'It\'s a tie!';
-    } else if (
+// Determine the winner
+const determineWinner = (playerChoice, computerChoice) => {
+    if (playerChoice === computerChoice) return 'It\'s a tie!';
+    if (
         (playerChoice === 'rock' && computerChoice === 'scissors') ||
         (playerChoice === 'paper' && computerChoice === 'rock') ||
         (playerChoice === 'scissors' && computerChoice === 'paper')
     ) {
         playerScore++;
         return 'You win!';
-    } else {
-        computerScore++;
-        return 'Computer wins!';
     }
-}
+    computerScore++;
+    return 'Computer wins!';
+};
 
-function updateScores() {
+// Update scores
+const updateScores = () => {
     playerScoreDisplay.textContent = playerScore;
     computerScoreDisplay.textContent = computerScore;
-}
+};
 
-function displayResult(playerChoice, computerChoice, result) {
-    const computerIcon = choices[computerChoice];
-    resultMessage.innerHTML = `${result} (Computer chose ${computerIcon})`;
-}
+// Display result with animations
+const displayResult = (playerChoice, computerChoice, result) => {
+    resultMessage.innerHTML = `${result} (Computer chose ${choices[computerChoice]})`;
+    resultMessage.className = ''; // Reset classes
+    resultMessage.classList.add(result.includes('win') ? 'win' : result.includes('tie') ? 'tie' : 'lose');
+};
 
-function handleChoice(playerChoice) {
+// Handle player choice
+const handleChoice = (playerChoice) => {
+    if (!isGameActive) return;
+
+    isGameActive = false; // Prevent spamming
     const computerChoice = getComputerChoice();
     const result = determineWinner(playerChoice, computerChoice);
+
     displayResult(playerChoice, computerChoice, result);
     updateScores();
-}
 
-// Add event listeners dynamically for each choice
-document.querySelectorAll('.choice').forEach(button => {
-    button.addEventListener('click', () => {
-        const playerChoice = button.id; // The button's id corresponds to 'rock', 'paper', or 'scissors'
-        handleChoice(playerChoice);
-    });
+    // Reactivate the game after a delay
+    setTimeout(() => (isGameActive = true), 1000);
+};
+
+// Add event listeners to choice buttons
+choicesButtons.forEach(button => {
+    button.addEventListener('click', () => handleChoice(button.id));
 });
 
-// Reset the game
+// Reset game
 resetButton.addEventListener('click', () => {
     playerScore = 0;
     computerScore = 0;
     updateScores();
-    resultMessage.innerHTML = "Make your choice!";
+    resultMessage.textContent = 'Make your choice!';
+    resultMessage.className = '';
 });

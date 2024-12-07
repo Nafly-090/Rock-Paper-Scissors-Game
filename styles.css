@@ -14,7 +14,6 @@ body {
     height: 100vh;
     margin: 0;
     color: white;
-    overflow: hidden;
 }
 
 .game-container {
@@ -35,82 +34,70 @@ h1 {
 }
 
 /* Choices Buttons */
+.choices {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Allows wrapping of buttons on smaller screens */
+    gap: 15px;
+}
+
 .choices button {
     margin: 15px;
     padding: 25px;
     font-size: 24px;
-    cursor: pointer;
     border: none;
     background: linear-gradient(135deg, #4caf50, #8bc34a);
     border-radius: 50%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    width: 145px;  /* Fixed width to ensure consistency */
-    height: 143px;  /* Fixed height to ensure consistency */
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 145px;
+    height: 143px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .choices button:hover {
     transform: scale(1.1);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(135deg, #388e3c, #66bb6a);
-}
-
-.choices i {
-    transition: transform 0.3s ease;
-}
-
-.choices button:hover i {
-    transform: scale(1.2) rotate(360deg);
 }
 
 /* Result message */
 .result p {
     font-size: 1.5rem;
-    font-weight: bold;
     margin-top: 20px;
-    color: #f1f1f1;
-    animation: pop 0.5s ease;
 }
 
 /* Score section - same row with space between */
 .score {
-    margin-top: 30px;
-    font-size: 1.2rem;
-    display: flex; /* Use flexbox to align items horizontally */
-    justify-content: space-between; /* Add space between the items */
-    align-items: center; /* Center-align the items */
-    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
     max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
 }
 
-.score p {
-    margin: 0;
+#resetButton {
+    margin-top: 20px;
+    padding: 10px 30px;
+    background: linear-gradient(135deg, #f44336, #e57373);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.score span {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #ff9800;
-}
-
-/* Pop animation for result */
-@keyframes pop {
-    0% {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+#resetButton:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
     .game-container {
-        padding: 30px;
+        padding: 20px;
     }
 
     h1 {
@@ -120,10 +107,41 @@ h1 {
     .choices button {
         padding: 20px;
         font-size: 20px;
+        width: 120px;  /* Slightly smaller buttons for mobile */
+        height: 118px;
     }
 
     .score {
         flex-direction: column; /* Stack scores vertically on smaller screens */
         align-items: center;
+    }
+
+    #resetButton {
+        padding: 10px 25px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .choices button {
+        padding: 15px;
+        font-size: 18px;
+        width: 100px; /* Further reduce button size */
+        height: 98px;
+    }
+
+    .score {
+        flex-direction: column;
+        align-items: center;
+        font-size: 1rem;
+    }
+
+    #resetButton {
+        padding: 10px 20px;
+        font-size: 1rem;
     }
 }
