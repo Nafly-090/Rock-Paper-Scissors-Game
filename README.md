@@ -14,4 +14,4 @@
 - JavaScript
 
 ## Credits
-- Designed and developed by [Your Name]
+- Designed and developed by Nafly
